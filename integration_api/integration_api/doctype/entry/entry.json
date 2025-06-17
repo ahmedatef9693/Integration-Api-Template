@@ -19,7 +19,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-16 16:49:15.539983",
+ "modified": "2025-06-17 16:39:18.877218",
  "modified_by": "Administrator",
  "module": "Integration Api",
  "name": "Entry",
@@ -42,5 +42,8 @@
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
 }
