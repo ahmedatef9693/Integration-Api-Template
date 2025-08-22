@@ -1,6 +1,6 @@
 
 import frappe
-from ..Validations.request_validations import RequestValidation
+from ..Validations.request_validations import DTORequestValidation
 from ..Validations.response_validations import Response
 
 
@@ -8,7 +8,7 @@ from ..Validations.response_validations import Response
 
 @frappe.whitelist()
 def get_dto():
-    validation_object = RequestValidation("Data Transfer Object")
+    validation_object = DTORequestValidation("Data Transfer Object")
     validation_object.validate_method()
     validation_object.validate_params()
     validation_object.validate_dto()
