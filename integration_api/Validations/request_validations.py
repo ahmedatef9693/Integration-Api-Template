@@ -15,7 +15,7 @@ class RequestValidation:
             field.fieldname for field in meta_data.fields
         ]
         for i, key in enumerate(params.keys()):
-            if (not key in fields) and (key != "start") and (key != "limit"):
+            if (not key in fields) and (key != "page") :
                 frappe.throw(f'Field {key} Doesnt Exists In Data Transfer Object')
 
 
@@ -46,22 +46,25 @@ class DTORequestValidation(RequestValidation):
 class ResourceValidation(RequestValidation):
     def __init__(self,doctype_name):
         super().__init__(doctype_name)
+        self.args = dict(frappe.local.request.args)
     
-    def validate_limit(self):
-        self.args = dict(self.request.args)
-        if "start" not in self.args:
-            self.args["start"] = 0
-        if "limit" not in self.args:
-            self.args["limit"] = 5
+    def validate_page(self):
+        # self.args = dict(self.request.args)
+        if "page" not in self.args:
+            self.args["page"] = 1
+        else:
+            page = int(self.args["page"])
+            if page == 0:
+                message = "Page Must Be Greater Than 0"
+                frappe.local.response["message"] = message
+                frappe.throw(message)
 
     def get_current_request(self):
         return self.args
     def validate_dto_existence(self):
         args_copy = deepcopy(self.args)
-        if "start" in args_copy:
-            args_copy.pop("start")
-        if "limit" in args_copy:
-            args_copy.pop("limit")
+        if "page" in args_copy:
+            args_copy.pop("page")
         self.validate_meta_data(args_copy)
         return True
     
